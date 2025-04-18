@@ -46,7 +46,7 @@ public:
     void DestroyPlayer(Player* pPlayer);
 
     // returns the number of currently allocated players
-    int GetNumPlayers();
+    int GetNumPlayers(); 
 
     // returns a player by ID
     Player* GetPlayerById(int id);
@@ -60,6 +60,7 @@ private:
 ```
 
 Please also write down if there are any changes you would propose?
+* GetNumPlayers and GetPlayerById should be const since they shouldn't modify the internal members of the PlayerManager class
 
 ## 3. Implement the following two functions:
 
@@ -193,7 +194,9 @@ struct IMatchmakingUI
     virtual void SetUserCb(const TUserCancelCb& cb) = 0;
     virtual void ClearUserCb() = 0;
 };
+```
 
+```
 // Please implement the following class
 // - request a match from the IMatchmakingService
 // - update the UI of the match request state while request is active
@@ -229,3 +232,5 @@ void CMatchmaking::StartMatchRequest(IMatchmakingUI* pUI)
 ```
 
 Please also write down if there are any changes you would propose?
+* InvalidRequest should be defined as constants instead of a define to avoid unexpected Macro replacement
+* I would remove the GetService static function out of the MatchMakingService interface which makes it difficult to be mocked in the unit tests. The unique MatchMakingServce instance should be managed by a singleton object that is used by the real application, I would pass the service instance to the matchMaking object constructor since the lifetime of service should always outlive the object since it exists as a singleton.

@@ -2,6 +2,45 @@ cmake_minimum_required(VERSION 3.28)
 
 include(GoogleTest)
 
+# solution1
+
+    add_library(solution1
+        solution1.cpp
+    )
+
+    target_include_directories(solution1
+    PUBLIC
+        .
+    )
+
+    target_compile_features(solution1
+    PUBLIC
+        cxx_std_98
+    )
+
+# solutions
+
+    add_library(solutions
+        solution2.cpp
+        solution3.cpp
+        solution4.cpp
+        solution5.cpp
+    )
+
+    target_include_directories(solutions
+    PUBLIC
+        .
+    )
+
+    target_compile_features(solutions
+    PUBLIC
+        cxx_std_23
+    )
+
+    target_compile_definitions(solutions
+        PRIVATE DEBUG_HASH
+    )
+
 # quiz
 
     add_executable(quiz
@@ -9,7 +48,7 @@ include(GoogleTest)
     )
 
     target_compile_features(quiz
-    PUBLIC
+    PRIVATE
         cxx_std_23
     )
 
@@ -23,118 +62,125 @@ include(GoogleTest)
         RUNTIME DESTINATION bin COMPONENT Runtime
     ) 
 
-# question 1
+# solution 1 Test
 
-    add_executable(question1
-        question1.t.cpp
+    add_executable(solution1test
+        solution1.t.cpp
     )
 
-    target_include_directories(question1
+    target_include_directories(solution1test
     PRIVATE
         .
     )
 
-    target_link_libraries(question1
+    target_link_libraries(solution1test
         gtest
         gtest_main
+        solution1
     )
 
-    target_compile_features(question1
+    target_compile_features(solution1test
     PUBLIC
         cxx_std_98  
     )
 
-    gtest_discover_tests(question1)
+    gtest_discover_tests(solution1test)
 
-# question 2
+# solution 2 Test
 
-    add_executable(question2
-        question2.t.cpp
+    add_executable(solution2test
+        solution2.t.cpp
     )
 
-    target_include_directories(question2
+    target_include_directories(solution2test
     PRIVATE
         .
     )
 
-    target_link_libraries(question2
+    target_link_libraries(solution2test
         gtest
         gtest_main
+        solutions
     )
 
-    target_compile_features(question2
+    target_compile_features(solution2test
     PUBLIC
         cxx_std_23  
     )
 
-    gtest_discover_tests(question2)
+    gtest_discover_tests(solution2test)
 
-# question 3
+# solution 3 Test
 
-    add_executable(question3
-        question3.t.cpp
+    add_executable(solution3test
+        solution3.t.cpp
     )
 
-    target_include_directories(question3
+    target_include_directories(solution3test
     PRIVATE
         .
     )
 
-    target_link_libraries(question3
+    target_link_libraries(solution3test
         gtest
         gtest_main
+        solutions
     )
 
-    target_compile_features(question3
+    target_compile_features(solution3test
     PUBLIC
         cxx_std_23
     )
 
-    gtest_discover_tests(question3)
+    gtest_discover_tests(solution3test)
 
-# question 4
+# solution 4 Test
 
-    add_executable(question4
-        question4.t.cpp
+    add_executable(solution4test
+        solution4.t.cpp
     )
 
-    target_include_directories(question4
+    target_include_directories(solution4test
     PRIVATE
         .
     )
 
-    target_link_libraries(question4
+    target_link_libraries(solution4test
         gtest
         gtest_main
+        solutions
     )
 
-    target_compile_features(question4
+    target_compile_features(solution4test
     PUBLIC
         cxx_std_23  
     )
 
-    gtest_discover_tests(question4)
+    gtest_discover_tests(solution4test)
 
-# question 5
+# solution 5 Test
 
-    add_executable(question5
-        question5.t.cpp
+    add_executable(solution5test
+        solution5.t.cpp
     )
 
-    target_include_directories(question5
+    target_include_directories(solution5test
     PRIVATE
         .
     )
 
-    target_link_libraries(question5
+    target_link_libraries(solution5test
         gtest
         gtest_main
+        gmock
+        gmock_main
+        solutions
     )
 
-    target_compile_features(question5
+    target_compile_features(solution5test
     PUBLIC
         cxx_std_23  
     )
 
-    gtest_discover_tests(question5)
+    gtest_discover_tests(solution5test)
 

@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
   ninja-build \
   cmake \
   gdb \
-  libgtest-dev
+  libgtest-dev \
+  libgmock-dev
 
 COPY * .
 
