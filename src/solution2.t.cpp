@@ -9,6 +9,9 @@ namespace Tests {
 
         EXPECT_EQ(playerManager.GetNumPlayers(), 0);
 
+        Player* player1 = nullptr;
+        Player* player3 = nullptr;
+
         {
             const int id = 1;
 
@@ -19,13 +22,13 @@ namespace Tests {
         {
             const std::string name("Player1");
             const int id = 1;
-            auto* player = playerManager.CreatePlayer(name.c_str(), id);
+            player1 = playerManager.CreatePlayer(name.c_str(), id);
 
-            EXPECT_TRUE(player != nullptr);
-            EXPECT_TRUE(::strncmp(name.c_str(), player->name, MAX_NAME_LENGTH) == 0);
-            EXPECT_EQ(player->id, id);
+            EXPECT_TRUE(player1 != nullptr);
+            EXPECT_TRUE(::strncmp(name.c_str(), player1->name, MAX_NAME_LENGTH) == 0);
+            EXPECT_EQ(player1->id, id);
 
-            EXPECT_EQ(player, playerManager.GetPlayerById(player->id));
+            EXPECT_EQ(player1, playerManager.GetPlayerById(player1->id));
             EXPECT_EQ(playerManager.GetNumPlayers(), 1);
         }
 
@@ -40,13 +43,13 @@ namespace Tests {
         {
             const std::string name("Player3");
             const int id = 3;
-            auto* player = playerManager.CreatePlayer(name.c_str(), id);
+            player3 = playerManager.CreatePlayer(name.c_str(), id);
 
-            EXPECT_TRUE(player != nullptr);
-            EXPECT_TRUE(::strncmp(name.c_str(), player->name, MAX_NAME_LENGTH) == 0);
-            EXPECT_EQ(player->id, id);
+            EXPECT_TRUE(player3 != nullptr);
+            EXPECT_TRUE(::strncmp(name.c_str(), player3->name, MAX_NAME_LENGTH) == 0);
+            EXPECT_EQ(player3->id, id);
 
-            EXPECT_EQ(player, playerManager.GetPlayerById(player->id));
+            EXPECT_EQ(player3, playerManager.GetPlayerById(player3->id));
             EXPECT_EQ(playerManager.GetNumPlayers(), 2);
         }
 
@@ -61,6 +64,10 @@ namespace Tests {
 
             EXPECT_EQ(player, playerManager.GetPlayerById(player->id));
             EXPECT_EQ(playerManager.GetNumPlayers(), 3);
+
+            // playerPtr shouldn't be invalidated
+            EXPECT_EQ(player1->id, 1);
+            EXPECT_EQ(player3->id, 3);
         }
     }
 

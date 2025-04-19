@@ -36,7 +36,7 @@ namespace Quiz {
         void DestroyPlayer(Player* pPlayer);
 
         // returns the number of currently allocated players
-        int GetNumPlayers() const { return this->numPlayers; }
+        int GetNumPlayers() const;
 
         // returns a player by ID
         Player* GetPlayerById(int id) const ;

@@ -1,3 +1,18 @@
+/*********************************************************************************************************************
+ * 
+ *  3. Implement the following two functions:
+ * 
+ *  Proposed changes:
+ *      * Change order of Vector members x, z, y to make it more user-friendly when using the bracket constructor.
+ *      * Pass arguments by const reference, since sizeof(Vector) > sizeof(void*).
+ *      * GetClosestVector should return an Optional<Vector> to handle the case of the vector list being empty, unless
+ *        the function use a contract that guaranteed that the list is not empty.
+ *  Notes:
+ *      * GetClosestVector use the square distance between vector to avoid to compute the square root. The square 
+ *        distance is proportional to the distance.
+ * 
+ * *******************************************************************************************************************/
+
 #include <solution3.hpp>
 
 #include <algorithm>

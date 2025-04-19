@@ -1,3 +1,21 @@
+/*********************************************************************************************************************
+ * 
+ *  2. Implement the functions of class PlayerManager
+ * Don’t change the Player struct and don’t use any stl container for Player storage. You can add additional member variables to the PlayerManager.
+ * 
+ * Proposed changes:
+ *      * GetNumPlayers and GetPlayerById should be const since they shouldn't modify the internal members of the PlayerManager class
+ * 
+ * Notes:
+ *      * GetPlayerById return nullptr when provided id is not found
+ *      * PlayerManager throw a PlayerAlreadyExistException if trying to add a player with an id that already exist
+ *      * PlayerManager throw an InvalidPlayerException if try to delete a player that do not exist or from a Player
+ *        instance not found in the manager
+ *      * Use a bucket that has an player id to a player instance, the bucket will grow automatically to avoid 
+ *        collision
+ *      * When the bucket is growing, it will not invalidate the pointers to the player instances
+ * 
+ * ********************************************************************************************************************/
 #include <solution2.hpp>
 
 #include <print>
@@ -75,19 +93,6 @@ namespace Quiz {
         orginalBucket = newBucket;
     }
 
-    Player* PlayerManager::GetPlayerById(int id) const {
-        if (this->bucketSize == 0) {
-            return nullptr;
-        }
-
-        std::size_t index = GetHash(id, this->bucketSize);
-        if (this->pPlayers[index] == nullptr || this->pPlayers[index]->id != id) {
-            return nullptr;
-        }
-
-        return this->pPlayers[index];
-    }
-
     PlayerManager::~PlayerManager() {
         this->DestroyAllPlayers();
     }
@@ -163,6 +168,23 @@ namespace Quiz {
         }
 
         DeletePlayerRaw(this->pPlayers[index], this->numPlayers);
+    }
+
+    int PlayerManager::GetNumPlayers() const { 
+        return this->numPlayers; 
+    }
+
+    Player* PlayerManager::GetPlayerById(int id) const {
+        if (this->bucketSize == 0) {
+            return nullptr;
+        }
+
+        std::size_t index = GetHash(id, this->bucketSize);
+        if (this->pPlayers[index] == nullptr || this->pPlayers[index]->id != id) {
+            return nullptr;
+        }
+
+        return this->pPlayers[index];
     }
 
 }

@@ -16,7 +16,8 @@ std::string GetName(std::map< int, std::string > names, int id)
 
 Please also write down if there are any changes you would propose?
 
-* Use const reference to pass the list/map to the GetSum/GetName functions. The functions does not need to modify the data structure arguments and it should avoid making a copy.
+* In GetSums, the list is passed by copy, it should be passed by const reference to avoid the unnecessary copy.
+* In GetName, the map is passed by copy, it should be passed by const reference to avoid the unnecessary copy.
 
 ## 2. Implement the functions of class **PlayerManager**. 
 
@@ -83,9 +84,9 @@ Vector GetClosestVector(Vector from, std::list< Vector > vectors)
 
 Please also write down if there are any changes you would propose?
 
-* Change order of Vector members x, z, y to make it more user-friendly when using the bracket constructor
-* Pass arguments by const reference, since sizeof(Vector) > sizeof(void\*)
-* GetClosestVector should return an Optional\<Vector\> to handle the case of the vector list being empty, unless the function guarantee as a contract that the list is not empty
+* Change order of Vector members x, z, y to make it more user-friendly when using the bracket constructor.
+* Pass arguments by const reference, since sizeof(Vector) > sizeof(void\*).
+* GetClosestVector should return an Optional\<Vector\> to handle the case of the vector list being empty, unless the function use a contract that guaranteed that the list is not empty.
 
 ## 4. Implement the three functions in BinarySearchTree
 

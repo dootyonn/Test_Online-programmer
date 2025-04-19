@@ -27,8 +27,8 @@ namespace Tests {
         std::map< int, std::string > names;
 
         {
-            EXPECT_THROW(GetName(names, 0), IdNotFound);
-            EXPECT_THROW(GetName(names, 10), IdNotFound);
+            EXPECT_EQ(GetName(names, 0), "");
+            EXPECT_EQ(GetName(names, 10), "");
         }
 
         names[0] = "zero";
@@ -36,8 +36,8 @@ namespace Tests {
 
         {
             std::string result;
-            EXPECT_THROW(GetName(names, -1), IdNotFound);
-            EXPECT_THROW(GetName(names, 10), IdNotFound);
+            EXPECT_EQ(GetName(names, -1), "");
+            EXPECT_EQ(GetName(names, 10), "");
 
             result = GetName(names, 0);
             EXPECT_EQ(result, "zero");
@@ -53,6 +53,6 @@ namespace Tests {
             EXPECT_EQ(result, "other one");
         }
     }
-    
+
 }
 }
