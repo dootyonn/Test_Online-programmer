@@ -234,4 +234,4 @@ void CMatchmaking::StartMatchRequest(IMatchmakingUI* pUI)
 
 Please also write down if there are any changes you would propose?
 * InvalidRequest should be defined as constants instead of a define to avoid unexpected Macro replacement
-* I would remove the GetService static function out of the MatchMakingService interface which makes it difficult to be mocked in the unit tests. The unique MatchMakingServce instance should be managed by a singleton object that is used by the real application, I would pass the service instance to the matchMaking object constructor since the lifetime of service should always outlive the object since it exists as a singleton.
+* I would remove the GetService static function out of the MatchMakingService interface which makes the interface difficult to be mocked in unit tests. The unique MatchMakingServce instance should be managed by a singleton object that is used by the real application; I would pass the service instance to the matchMaking object constructor since the lifetime of service should always outlive the object since it exists as a singleton.

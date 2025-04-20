@@ -1,3 +1,16 @@
+/*********************************************************************************************************************
+ * 
+ *  4. Implement the three functions in BinarySearchTree
+ * 
+ *  Notes:
+ *      * My implementation is not auto balancing binary tree when adding/removing elements, the question only 
+ *        require a binary tree which may not balanced when searching an element
+ *      * I've used templated functions so that I don't need to declare them as friend in the header file
+ * 
+ * 
+ * 
+ * *******************************************************************************************************************/
+
 #include <solution4.hpp>
 
 #include <functional>
@@ -5,6 +18,7 @@
 #include <set>
 #include <list>
 #include <vector>
+#include <concepts>
 
 #include <cstdlib>
 
@@ -14,52 +28,18 @@ namespace Quiz {
     template <typename TNode>
     using TypePtr = TNode*;
 
+    template<typename TNode>
+    concept IsNode = requires (TNode n) {
+        n.value;
+        n.left;
+        n.right;
+        requires std::same_as<int, decltype(n.value)>;
+        requires std::same_as<TNode*, decltype(n.left)>;
+        requires std::same_as<TNode*, decltype(n.right)>;
+    };
+
     template <typename T>
     using VisitAction = std::function<bool(T* current)>;
-
-    // template <typename TNode>
-    // bool inOrderVisit(
-    //     TNode* node,
-    //     VisitAction<TNode> action
-    // ) {
-    //     if (node) {
-    //         if (inOrderVisit(node->left, action)) {
-    //             return true;
-    //         }
-
-    //         if (action(node)) {
-    //             return true;
-    //         }
-            
-    //         if (inOrderVisit(node->right, action)) {
-    //             return true;
-    //         }    
-    //     }
-
-    //     return false;
-    // }
-
-    // template <typename TNode>
-    // bool preOrderVisit(
-    //     TNode* node,
-    //     VisitAction<TNode> action
-    // ) {
-    //     if (node) {
-    //         if (action(node)) {
-    //             return true;
-    //         }
-
-    //         if (preOrderVisit(node->left, action)) {
-    //             return true;
-    //         }
-        
-    //         if (preOrderVisit(node->right, action)) {
-    //             return true;
-    //         }    
-    //     }
-
-    //     return false;
-    // }
 
     template<typename TNode>
     bool postOrderVisit(
@@ -83,71 +63,48 @@ namespace Quiz {
         return false;
     }
 
-    // void BinarySearchTree::print() const {
-    //     std::print("content: ");
-    //     preOrderVisit<Node>(this->root, [] (const Node* node){
-    //         std::print("{} ", node->value);
-    //         return false;
-    //     });
-    //     std::println("");
-    // }
-
-
-    // template<typename TNode>
-    // std::size_t getSize(const TNode* node) {
-    //     size_t count = 0;
-    //     preOrderVisit(nullptr, node, [&count] {
-    //         ++count;
-    //         return false;
-    //     });
-
-    //     return count;
-    // }
-
-    template<typename TNode, typename TValue>
-    bool containsValue(TNode* node, TValue value) {
+    template<typename TNode>
+    requires IsNode<TNode>
+    bool containsValue(TNode* node, int value) {
         if (!node) {
             return false;
         }
 
-        if (node->value == value) {
-            return true;
-        }
-        else if (value < node->value) {
+        if (value < node->value) {
             return containsValue(node->left, value);
         }
-        else {
+        else if (value > node->value) {
             return containsValue(node->right, value);
+        }
+        else {
+            return true;
         }
     }
 
-
-
     template<typename TNode>
+    requires IsNode<TNode>
     void destroy(TypePtr<TNode>& node) {
         if (node) {
-            // std::println("destroy node: {}", node->value);
             delete node;
             node = nullptr;
         }
     }
 
-    template<typename TNode, typename TValue>
-    TNode* createLeafNode(TValue value) {
+    template<typename TNode>
+    requires IsNode<TNode>
+    TNode* createLeafNode(int value) {
         return new TNode{ .value = value };
     }
 
-    template<typename TNode, typename TValue>
-    bool addNode(TypePtr<TNode>& node, TValue value) {
+    template<typename TNode>
+    requires IsNode<TNode>
+    bool addNode(TNode*& node, int value) {
         if (!node) {
             node = createLeafNode<TNode>(value);
             return true;
         }
 
-        if (value == node->value) {
-            return false;
-        }
-        else if (value < node->value) {
+        if (value < node->value) {
             if (!node->left) {
                 node->left = createLeafNode<TNode>(value);
                 return true;
@@ -156,7 +113,7 @@ namespace Quiz {
                 return addNode(node->left, value);
             }
         }
-        else {
+        else if (value > node->value) {
             if (!node->right) {
                 node->right = createLeafNode<TNode>(value);
                 return true;
@@ -165,10 +122,14 @@ namespace Quiz {
                 return addNode(node->right, value);
             }
         }
+        else {
+            return false;
+        }
     }
 
-    template<typename TNode, typename TValue>
-    bool removeNode(TypePtr<TNode>& node, TValue value) {
+    template<typename TNode>
+    requires IsNode<TNode>
+    bool removeNode(TypePtr<TNode>& node, int value) {
         if (!node) {
             return false;
         }
@@ -207,7 +168,7 @@ namespace Quiz {
 
     BinarySearchTree::~BinarySearchTree() {
         postOrderVisit<Node>(this->root, [](Node* node) { 
-            destroy(node);
+            destroy<Node>(node);
             return false;
         });
     }
@@ -224,7 +185,7 @@ namespace Quiz {
 
     bool BinarySearchTree::contains(int value) const
     {
-        return containsValue<Node, int>(this->root, value);
+        return containsValue<Node>(this->root, value);
     }
 
 }

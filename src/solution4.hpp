@@ -12,8 +12,6 @@ namespace Quiz {
         bool remove(int value);
         bool contains(int value) const;
 
-        void print() const;
-
     private:
         struct Node
         {

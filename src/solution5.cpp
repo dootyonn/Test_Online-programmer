@@ -1,10 +1,28 @@
-/*
-Solution Details:
-    -  
-    - Process the UI update in a background thread so the service update are not blocked by UI updates
+/*********************************************************************************************************************
+ * 
+ * 5. Implement the CMatchmaking class:
+ * 
+ * Proposed changes:
+ *      * InvalidRequest should be defined with a "const" statement instead of a define to avoid unexpected Macro
+ *        replacement
+ *      * I would remove the GetService static function out of the MatchMakingService interface which makes the
+ *        interface difficult to be mocked in unit tests. The unique MatchMakingServce instance should be managed by 
+ *        a singleton object that is used by the real application; I would pass the service instance to the 
+ *        matchMaking object constructor since the lifetime of service should always outlive the object since it
+ *        exists as a singleton.
+ * 
+ * Notes:
+ *      * The match making UI events are processed in a separate thread to avoid blocking the match making service
+ *        thread by the the UI updates
+ *      * It is not possible to do more than 1 match making at a time.
+ *      * ProcessMatchMakingServiceUpdate, ProcessCancel and ProcessDone are declared protected so that they can be 
+ *        triggered at will from the unit tests. The same as mimicking the Callback behavior from a
+ *        IMatchMakingService and IMatchMakingUI implementation
+ *      * Making sure that the BG thread is joined in the destructor to make sure that the BG work with deleted data
+ * 
+ * 
+ * *******************************************************************************************************************/
 
-
-*/
 #include <solution5.hpp>
 
 #include <print>
@@ -23,7 +41,6 @@ namespace Quiz {
         ProcessDone();
         this->updateQueueIsRunning.store(false);
 
-        //this->requestUpdateMutex.unlock();
         this->waitForUpdate.notify_one();
         this->processUpdatesThread.join();
     }
@@ -62,7 +79,10 @@ namespace Quiz {
                 throw SessionIsAlreadyActiveException();
             }
             
-            pUI->SetUserCb([this] () { this->ProcessCancel(); });
+            pUI->SetUserCb([this] () { 
+                this->ProcessCancel(); 
+            });
+            
             TRequestId requestId = this->pService->RequestMatch([this] (EMatchState state, void* state_data) {
                 this->ProcessMatchMakingServiceUpdate(state, state_data);
             });
