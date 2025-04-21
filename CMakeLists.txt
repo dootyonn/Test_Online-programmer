@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.28)
 
-project(
-  quiz
+project(quiz
   VERSION 1.0.0
   LANGUAGES CXX
 )
