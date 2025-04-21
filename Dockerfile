@@ -1,23 +1,23 @@
 FROM ubuntu:25.04
 
-WORKDIR /app
-
 RUN apt-get update && apt-get install -y \
   g++ \
   ninja-build \
   cmake \
   gdb \
   libgtest-dev \
-  libgmock-dev
+  libgmock-dev 
 
-COPY * .
+USER ubuntu
 
-RUN mkdir build
-WORKDIR /app/build
-RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local 
-RUN cmake --build .
-RUN ctest .
-RUN cmake --install . 
+WORKDIR /home/ubuntu/app
+COPY . /home/ubuntu/app
 
-ENTRYPOINT [ "/usr/local/bin/quiz" ]
-CMD [ ]
+RUN cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local .
+RUN cmake --build build
+RUN ctest --test-dir build
+
+USER root
+RUN cmake --install build
+
+CMD ["ctest", "--test-dir", "build"]
