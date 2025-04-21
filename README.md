@@ -2,7 +2,20 @@
 
 ## Instructions
 
+### Using Docker
 
+to build the image:
+```
+$ docker build -t quiz .
+```
+
+to run the image tests
+```
+$ docker run quiz
+```
+
+Notes:
+* The image has been tested working with Ubuntu 25.04. it requires the g++ compiler, cmake 3.28, google test, google mock installed to build properly.
 
 ## 1. Implement the two functions without any c++11 or above features:
 
