@@ -118,6 +118,9 @@ namespace Quiz
         struct SessionIsAlreadyActiveException : public std::exception {};
         struct InvalidRequest : public std::exception {};
 
+        CMatchmaking(const CMatchmaking&) = delete;
+        CMatchmaking& operator=(const CMatchmaking&)= delete;
+
     protected:
         void ProcessMatchMakingServiceUpdate(EMatchState state, void* state_data);
         void ProcessCancel();
