@@ -29,11 +29,11 @@ namespace Quiz {
     typedef Player** BucketPtr;
     typedef Player* PlayerPtr;
 
-    constexpr BucketPtr AllocateBucket(std::size_t size) {
+    BucketPtr AllocateBucket(std::size_t size) {
         return new Player*[size]{ nullptr };
     }
 
-    constexpr PlayerPtr AllocatePlayer(const char* name, int id) {
+    PlayerPtr AllocatePlayer(const char* name, int id) {
         std::size_t nameLength = ::strnlen(name, MAX_NAME_LENGTH);
 
         auto* player = new Player{
@@ -49,7 +49,7 @@ namespace Quiz {
         return static_cast<std::size_t>(id) % bucketSize;
     }
 
-    constexpr void DeallocatePlayer(PlayerPtr& playerPtr, int& numPlayer) {
+    void DeallocatePlayer(PlayerPtr& playerPtr, int& numPlayer) {
         assert(playerPtr != nullptr);
         delete[] playerPtr->name;
         delete playerPtr;
@@ -110,6 +110,7 @@ namespace Quiz {
 
     PlayerManager::~PlayerManager() {
         this->DestroyAllPlayers();
+        delete[] this->pPlayers;
     }
 
     void PlayerManager::DestroyAllPlayers() {
