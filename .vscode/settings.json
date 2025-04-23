@@ -64,7 +64,8 @@
         "variant": "cpp",
         "*.tcc": "cpp",
         "chrono": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "valarray": "cpp"
     },
     "cSpell.enabled": false
 }

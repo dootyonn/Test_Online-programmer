@@ -17,16 +17,17 @@
 
 #include <algorithm>
 #include <math.h>
+#include <valarray>
 
 namespace Quiz {
 
     float GetSquareDistance(const Vector& a, const Vector& b) {
-        float result = 0.0f;
-        result += (a.x - b.x) * (a.x - b.x);
-        result += (a.y - b.y) * (a.y - b.y);
-        result += (a.z - b.z) * (a.z - b.z);
-        return result;
-        
+        std::valarray<float> lh { a.x, a.y, a.z, 1.0f };
+        std::valarray<float> rh { b.x, b.y, b.z, 1.0f };
+
+        lh -= rh;
+        lh *= lh;
+        return lh.sum();
     }
 
     float GetDistance(const Vector& a, const Vector& b)
