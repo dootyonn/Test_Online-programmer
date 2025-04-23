@@ -65,5 +65,6 @@
         "*.tcc": "cpp",
         "chrono": "cpp",
         "iomanip": "cpp"
-    }
+    },
+    "cSpell.enabled": false
 }

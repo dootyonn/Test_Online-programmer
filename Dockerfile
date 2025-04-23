@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y \
   ninja-build \
   cmake \
   gdb \
+  cppcheck \
   libgtest-dev \
   libgmock-dev 
 

@@ -113,11 +113,11 @@ namespace Quiz {
         delete[] this->pPlayers;
     }
 
-    void PlayerManager::DestroyAllPlayers() {
+    void PlayerManager::DestroyAllPlayers() noexcept {
         for (std::size_t i = 0; i < bucketSize; ++i) {
             auto* player = this->pPlayers[i];
             if (player) {
-                this->DestroyPlayerById(player->id);
+                DeallocatePlayer(this->pPlayers[i], this->numPlayers);
             }
         }
     }

@@ -26,7 +26,7 @@ namespace Quiz {
         ~PlayerManager();
 
         // destroys all players and deallocates their memory
-        void DestroyAllPlayers();
+        void DestroyAllPlayers() noexcept;
 
         // allocates memory and returns the new player object
         Player* CreatePlayer(const char* name, int id);

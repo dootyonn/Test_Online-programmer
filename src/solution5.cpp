@@ -12,6 +12,7 @@
  *        exists as a singleton.
  * 
  * Notes:
+ *      * CMatchMaking shouldn't be copyable
  *      * The match making UI events are processed in a separate thread to avoid blocking the match making service
  *        thread by the the UI updates
  *      * It is not possible to do more than 1 match making at a time.

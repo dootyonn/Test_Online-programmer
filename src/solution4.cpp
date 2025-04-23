@@ -159,8 +159,11 @@ namespace Quiz {
                     lowest = lowest->left;
                 }
 
-                node->value = lowest->value;
-                return removeNode(node->right, lowest->value);
+                if (lowest) {
+                    node->value = lowest->value;
+                    return removeNode(node->right, lowest->value);
+                }
+                return false;
             }
         }
     }

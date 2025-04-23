@@ -21,7 +21,7 @@ namespace Tests {
             float result = GetSum(numbers);
             ASSERT_FLOAT_EQ(0.6f, result);
         }
-    }
+    };
 
     TEST(solution1, testGetNames) {
         std::map< int, std::string > names;
