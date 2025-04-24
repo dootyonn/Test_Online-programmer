@@ -3,10 +3,11 @@
 
 #include <list>
 #include <optional>
+#include <valarray>
 
 namespace Quiz {
 
-    struct Vector
+    struct alignas(32) Vector
     {
         float x, y, z;
     };
@@ -15,7 +16,7 @@ namespace Quiz {
 
     float GetDistance(const Vector& a, const Vector& b);
 
-    std::optional<Vector> GetClosestVector(Vector from, std::list< Vector > vectors);
+    std::optional<Vector> GetClosestVector(const Vector& from, std::list< Vector > vectors);
 
 }
 

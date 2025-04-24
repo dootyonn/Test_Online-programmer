@@ -17,7 +17,6 @@
 
 #include <algorithm>
 #include <math.h>
-#include <valarray>
 
 namespace Quiz {
 
@@ -35,7 +34,7 @@ namespace Quiz {
         return sqrt(GetSquareDistance(a, b));
     }
 
-    std::optional<Vector> GetClosestVector(Vector from, std::list< Vector > vectors)
+    std::optional<Vector> GetClosestVector(const Vector& from, std::list< Vector > vectors)
     {
         if (vectors.empty()) {
             return std::optional<Vector>();
