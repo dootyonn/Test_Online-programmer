@@ -7,7 +7,7 @@ namespace Quiz {
 namespace Tests {
 
     TEST(solution1, testGetSum) {
-        std::list<float> numbers;
+        std::vector<float> numbers;
         {
             float result = GetSum(numbers);
             ASSERT_FLOAT_EQ(0.0f, result);

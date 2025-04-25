@@ -19,10 +19,10 @@ namespace Quiz {
 
     
 
-    float GetSum(const std::list< float >& numbers)
+    float GetSum(const std::vector< float >& numbers)
     {
         float sum = 0.0f;
-        typedef std::list< float >::const_iterator const_floatiter;
+        typedef std::vector< float >::const_iterator const_floatiter;
         for (const_floatiter it = numbers.begin(); it != numbers.end(); ++it) {
             sum += *it;
         }
