@@ -85,7 +85,7 @@ Please also write down if there are any changes you would propose?
 ```
 struct Vector
 {
-    float x, y, z;
+    float x, z, y;
 };
 
 float GetDistance(Vector a, Vector b)
