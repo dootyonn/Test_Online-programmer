@@ -155,13 +155,15 @@ namespace Quiz {
             }
             else {
                 auto* lowest = node->right;
+                // leftmost element from the rigth tree
                 while (lowest && lowest->left) {
                     lowest = lowest->left;
                 }
 
                 if (lowest) {
                     node->value = lowest->value;
-                    return removeNode(node->right, lowest->value);
+                    //remove lowest node from the right tree
+                    return removeNode(node->right, lowest->value); 
                 }
                 return false;
             }

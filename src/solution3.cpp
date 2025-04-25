@@ -34,7 +34,7 @@ namespace Quiz {
         return sqrt(GetSquareDistance(a, b));
     }
 
-    std::optional<Vector> GetClosestVector(const Vector& from, std::list< Vector > vectors)
+    std::optional<Vector> GetClosestVector(const Vector& from, const std::vector< Vector >& vectors)
     {
         if (vectors.empty()) {
             return std::optional<Vector>();

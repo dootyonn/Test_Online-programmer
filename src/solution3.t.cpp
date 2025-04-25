@@ -36,7 +36,7 @@ namespace Tests {
     TEST(solution3, testGetClosestVector) {
         {
             Vector from{ .x = 1.0f, .y = 2.0f, .z = 3.0f };
-            std::list<Vector> vectors;
+            std::vector<Vector> vectors;
 
             auto result = GetClosestVector(from, vectors);
             EXPECT_FALSE(result.has_value());

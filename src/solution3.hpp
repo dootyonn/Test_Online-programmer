@@ -1,13 +1,13 @@
 #ifndef SOLUTION3_HPP
 #define SOLUTION3_HPP
 
-#include <list>
+#include <vector>
 #include <optional>
 #include <valarray>
 
 namespace Quiz {
 
-    struct alignas(32) Vector
+    struct alignas(sizeof(float) * 4) Vector
     {
         float x, y, z;
     };
@@ -16,7 +16,7 @@ namespace Quiz {
 
     float GetDistance(const Vector& a, const Vector& b);
 
-    std::optional<Vector> GetClosestVector(const Vector& from, std::list< Vector > vectors);
+    std::optional<Vector> GetClosestVector(const Vector& from, const std::vector< Vector >& vectors);
 
 }
 
