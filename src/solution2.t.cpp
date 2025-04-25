@@ -185,7 +185,7 @@ namespace Tests {
             auto* playerExist = playerManager.GetPlayerById(value);
 
             if (!playerExist) {
-                if (oneOverFive) {
+                if (oneOverFive()) {
                     toDelete.push_back(value);
                 }
 
